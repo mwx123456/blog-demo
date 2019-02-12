@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{{block 'title'}}默认标题{{/block}}</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  {{block 'head'}}{{/block}}
+  <style>
+   .container .navbar-header .navbar-brand{
+    float: left;
+    height: 50px;
+    /* padding: 15px 15px; */
+    font-size: 18px;
+    line-height: 20px;
+     
+    }
+    .navbar-brand img{
+      height: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  {{include '../_partials/header.html'}}
+  {{block 'body'}}{{/block}}
+  {{include '../_partials/footer.html'}}
+  <script src="/node_modules/jquery/dist/jquery.js"></script>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+  {{block 'script'}}{{/block}}
+</body>
+
+</html>
