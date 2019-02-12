@@ -14,8 +14,34 @@ router.get("/login",function(req,res){
     res.render("login.html")
 })
 
-router.post("/login",function(){
+router.post("/login",function(req,res){
+    //1.获取表单数据2.判断查询数据库中用户名和密码是否正确3.发送响应
+    var body = req.body
+    User.findOne({
+        email:body.email,
+        password:md5(md5(body.password))
+    },function (err,user) {
+        if(err){
+            return res.status(500).json({
+                err_code:500,
+                message:err.message
+            })
+        }
 
+        if(!user){
+            return res.status(500).json({
+                err_code:1,
+                message:"用户名和密码无效"
+            })
+        }
+
+        //登录成功之后要记录session登录状态
+        req.session.user = user
+        res.status(200).json({
+            err_code:0,
+            message:"ok"
+        })
+      })
 })
 
 router.get("/register",function(req,res){
@@ -95,6 +121,14 @@ router.post("/register",async function (req,res) {
 
       
       })
+
+  })
+
+router.get("/loginout",function (req,res) {
+    //清除登录状态
+    req.session.user = null
+    // 重定向到登录网页
+    res.redirect("./login")
 
   })
 module.exports = router
